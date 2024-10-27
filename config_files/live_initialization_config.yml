@@ -1,0 +1,65 @@
+# This YAML file is a configuration file for all
+# initialization parameters used for the `LiveSurvey`
+# class in Echopop
+
+---
+  #####################################################################################################################
+  # Biological data processing#
+  ########################
+  biology:
+    # Length-binning
+    # NOTE: start : end : number
+    length_distribution:
+      bins: [2, 80, 40]
+    # Station separation
+    # NOTE: if `separate_stations` is True, `['list']` is required for `station_id`
+    stations:
+      separate_stations: True
+      station_id: ["length", "specimen"]
+    # Trawl identifier
+    catch:
+      partition: codend
+
+  #####################################################################################################################
+  # Geospatial settings#
+  ########################
+  geospatial:
+    inpfc:                                  # INPFC northern latitude limits and labels
+      latitude_max: [36.0, 40.5, 43.0,
+                    45.7667, 48.50, 55.0]
+      stratum_names: [1, 2, 3, 4, 5, 6]
+    griddify:
+      # Coordinate bounds
+      bounds:
+        latitude: [32.75, 55.50]
+        longitude: [-135.25, -117.00]
+      # x/y (or E-W/N-S) grid resolution in nmi
+      grid_resolution:
+        x_distance: 25.0
+        y_distance: 25.0
+    projection: epsg:4326                   # EPSG integer code for geodetic parameter dataset
+  # TODO: Remember to convert this back to a string
+  # NOTE: `link_biology_acoustics` defines how biological and acoustic data are linked with one another. This
+  # comprises True/False statements that denote the desired association. All values set to "True" will be output.
+  # `global`        --> NASC associated with sigma_bs calculated from all survey data
+  # `INPFC`         --> NASC for each INPFC stratum associated with matched stratum-specific sigma_bs
+  # `closest_haul`  --> NASC associated with sigma_bs calculated from the closest (spatially) trawls
+  # `weighted_haul` --> NASC associated with sigma_bs calculated from all survey data weighted by distance from haul coordinates
+    link_biology_acoustics: INPFC
+
+  #####################################################################################################################
+  # Acoustics settings#
+  ########################
+  acoustics:
+    # Acoustic transmit frequency (Hz or kHz)
+    transmit:
+      frequency: 38.0
+      units: kHz
+    # Target strength (TS) - length (L) regression: TS=m*log10(L)+b
+    TS_length_regression_parameters:
+      pacific_hake:                         # corresponding species text code
+        number_code: 22500                  # species number code
+        TS_L_slope: 20.0                    # the 'm' or 'slope' parameter
+        TS_L_intercept: -68.0               # the 'b' or 'y-intercept'
+        length_units: cm                    # units for L used in regression/relationship
+...

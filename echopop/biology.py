@@ -75,7 +75,7 @@ def fit_length_weight_relationship(
                 np.polyfit(np.log10(df["length"]), np.log10(df["weight"]), 1),
                 index=["rate", "initial"],
             ),
-            include_groups=False,
+            # include_groups=False,
         )
         .reset_index()
     )

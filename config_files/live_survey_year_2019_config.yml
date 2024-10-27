@@ -1,0 +1,54 @@
+# This YAML file is a configuration file specifying
+# input filenames & some process parameter settings.
+# Relative file paths defined below are concatenated
+# with the data_root_dir path also set below.
+
+---
+##############################################################################
+# Parameters
+
+ship_id: R/V Shimada
+survey_year: 2024           # survey year being considered
+species:
+  text_code: pacific_hake    # target species for the survey year -- species name
+  number_code: 22500         # target species for the survey year -- numeric code
+##############################################################################
+# Directory path that contains all input data needed
+
+data_root_dir: C:/Users/Brandyn/Documents/GitHub/EchoPro_data/live_2019_files
+database_directory: C:/Users/Brandyn/Documents/GitHub/EchoPro_data/live_2019_files/database
+
+##############################################################################
+# Input data directories
+input_directories:
+  acoustics:
+    directory: acoustics/
+    database_name: acoustics.db
+    extension: zarr
+  biology:
+    directory: biology/
+    # directory: s3://sh2407-upload/data/Echopop-biology/
+    database_name: biology.db
+    extension: csv
+    file_name_formats:
+      catch: "{DATE:YYYYMM}_{HAUL}_{FILE_ID:catch_perc}"
+      length: "{DATE:YYYYMM}_{SPECIES_CODE}_{HAUL}_{FILE_ID:lf}"
+      specimen: "{DATE:YYYYMM}_{SPECIES_CODE}_{HAUL}_{FILE_ID:spec}"
+      trawl_info: "{DATE:YYYYMM}_{HAUL}_{FILE_ID:operation_info}"
+    file_index:
+      catch: [haul_num]
+      length: [haul_num, species_id]
+      specimen: [haul_num, species_id]
+      trawl_info: []
+    file_ids:
+      catch: catch_perc
+      length: lf
+      specimen: spec
+      trawl_info: operation_info
+  coastline:
+    directory: coastline/
+    coastline_name: ne_10m_land
+  grid:
+    database_name: grid.db
+
+...
